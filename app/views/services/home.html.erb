@@ -1,0 +1,35 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Services</h1>
+    <% @services.each do | k,v | %>
+      <% @latest_deployment = GitHub.latest_deployment(k,'production') %>
+      <%= govuk_table do |table|
+        section_header = govuk_link_to k, service_path(k), text_colour: true, no_underline: true
+        table.caption(size: 'm', text: section_header)
+        
+        table.body do |body|
+          body.row do |row|
+            row.cell(header: true, text: 'Environment')
+            row.cell(text: @latest_deployment.environment.capitalize)
+          end;
+        
+          body.row do |row|
+            sha_link = govuk_link_to @latest_deployment.commit_sha[0..6], GitHub.link_for_sha(k, @latest_deployment.commit_sha)
+            row.cell(header: true, text: 'Sha')
+            row.cell(text: sha_link)
+          end;
+
+          body.row do |row|
+            row.cell(header: true, text: 'Deployed at')
+            row.cell(text: format_time(@latest_deployment.start_time))
+          end;
+
+          body.row do |row|
+            row.cell(header: true, text: 'Status')
+            row.cell(text: govuk_tag(text: @latest_deployment.status, colour: colour_for_status(@latest_deployment.status)))
+          end;
+        end;
+      end %>
+    <%end%>
+  </div>
+</div>

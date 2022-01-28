@@ -1,0 +1,10 @@
+shared:
+  org: DfE-Digital
+  repositories:
+    apply-for-teacher-training:
+      environments:
+        - production
+        - sandbox
+        - research
+        - staging
+        - qa
