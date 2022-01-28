@@ -36,3 +36,4 @@ Here are some things that we would like to add, but haven't yet.
 * Deployment status should link to the workflow run
 * We should be able to diff between the current version and previous
 * Add a deploy freeze button
+* CI/CD workflows
